@@ -1,11 +1,12 @@
 import numpy as np
 import re
+from tqdm import tqdm
 
 class rnn:
 
     def __init__(self, corpus, y=None, a_size=1):
         self.corpus = corpus
-        self.corpus = [re.sub("\W+", "", i) for i in self.corpus]
+        self.corpus = [re.sub("[^a-zA-z 1-9]", "", i) for i in self.corpus]
         self.y = y
         self.a_size = a_size
 
@@ -38,7 +39,7 @@ class rnn:
     def init_params(self, x_size, a_size):
         parameters = {}
 
-        parameters["WAX"] = np.random.randn(x_size, a_size)
+        parameters["WAX"] = np.random.randn(a_size, x_size)
         parameters["WAA"] = np.random.randn(a_size, a_size)
         parameters["BA"] = np.zeros((a_size, 1))
 
@@ -56,8 +57,8 @@ class rnn:
         self.parameters['BAI'] += -lr * gradients['dBi']
 
     def cell_forward(self, x, a_prev):
-        aa = np.dot(a_prev, self.parameters["WAA"])
-        ax = np.dot(x, self.parameters["WAX"])
+        aa = np.dot(self.parameters["WAA"], a_prev)
+        ax = np.dot(self.parameters["WAX"], x)
         a_raw = aa + ax + self.parameters["BA"]
         a_next = np.tanh(a_raw)
         return a_next
@@ -123,4 +124,15 @@ class rnn:
 
         grad_final.update(grads)
 
-        self.update_parameters(grad_final)
+        return grad_final, loss
+
+    def train(self, epochs):
+
+        for i in range(epochs):
+            losses = []
+            for sentence, rating in tqdm(zip(self.x, self.y)):
+                caches, finalcache = self.net_forward(x)
+                grads, loss = self.net_back(caches, finalcache, y)
+                self.update_parameters(grads)
+                losses.append(loss**2)
+            print(f"Epoch: {i} | Sum of Squared Losses: {sum(losses)}")
