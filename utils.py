@@ -61,4 +61,4 @@ def substrings(main, size, step = 1):
 
 
 if __name__ == "__main__":
-    print(substrings(open("chugjug.txt", "r").read(), 3, step=2))
+    print(substrings(open("anime_data_v1.txt", "r").read(), 3, step=2))
