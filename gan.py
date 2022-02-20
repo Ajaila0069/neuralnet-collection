@@ -213,9 +213,7 @@ class GAN:
 
                 #for i in range(self.kval):
                 self.d_back(x_real, z1_d_real, a1_d_real, x_fake, z1_d_fake, a1_d_fake)
-                #self.d_back(x_real, z1_d_real, a1_d_real, x_fake, z1_d_fake, a1_d_fake)
                 self.g_back(z, x_fake, z1_d_fake, a1_d_fake)
-                #self.g_back(z, x_fake, z1_d_fake, a1_d_fake)
 
             if epoch % self.disp == 0:
                 print(f"Epoch:{epoch:}|G loss:{J_G:.4f}|D loss:{J_D:.4f}|D(G(z))avg:{np.mean(a1_d_fake):.4f}|D(x)avg:{np.mean(a1_d_real):.4f}|LR:{self.lr:.6f}")
@@ -232,7 +230,7 @@ class GAN:
 
         return J_Ds, J_Gs
 
-numbers = [9]
+numbers = [2]
 whereswaldo = GAN(numbers, epochs=50)
 J_Ds, J_Gs = whereswaldo.train(x_train, y_train)
 

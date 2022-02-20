@@ -2,6 +2,7 @@ import numpy as np
 import random
 import math
 import re
+import json
 
 def noisify(set, diff=0.5):
     noisy = set + np.random.normal(0, diff, size=set.shape)
@@ -61,4 +62,5 @@ def substrings(main, size, step = 1):
 
 
 if __name__ == "__main__":
-    print(substrings(open("anime_data_v1.txt", "r").read(), 3, step=2))
+    with open("lol.json", "w") as f:
+        json.dump(substrings(open("anime_data_v1.txt", "r").read(), 2, step=1), f, indent=4)

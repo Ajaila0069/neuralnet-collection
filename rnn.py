@@ -136,3 +136,6 @@ class rnn:
                 self.update_parameters(grads)
                 losses.append(loss**2)
             print(f"Epoch: {i} | Sum of Squared Losses: {sum(losses)}")
+
+
+whereswaldo = rnn()

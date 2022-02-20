@@ -186,6 +186,7 @@ class rnn:
 
             new_loss, grads, a_prev = self.optimize(x, y, a_prev)
             loss = self.smooth(loss, new_loss)
+            print(loss)
 
             if (i != 0) and (i % checkpoint == 0):
                 seed = 0
@@ -205,7 +206,7 @@ class rnn:
 
 
 
-textname = 'anime_data_v1.txt'
+textname = 'reddit.txt'
 
 with open(textname, 'r') as t:
     text = t.read()
