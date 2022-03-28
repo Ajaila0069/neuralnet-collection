@@ -171,7 +171,7 @@ class rnn:
             ixs.append(itera)
 
             if itera % sample_index == 0:
-                self.lr /= self.dr
+                #self.lr /= self.dr
                 print(loss)
                 print(" ".join([self.ix_to_char[i] for i in self.sample(random.randrange(self.vocab_size))]))
 
@@ -200,7 +200,7 @@ class rnn:
         return indices
 
 
-textname = 'reddit.txt'
+textname = 'chugjug.txt'
 
 with open(textname, 'r') as t:
     text = t.read()
